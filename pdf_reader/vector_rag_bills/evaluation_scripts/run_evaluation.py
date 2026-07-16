@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 # Import your compiled LangGraph app
 # Ensure the filename matches your actual main script (e.g., pvt_rag_chromadb_pandas)
-from pvt_rag_chromadb_pandas import build_agent
+from vector_rag_bills.pvt_rag_chromadb_pandas import build_agent
 
 load_dotenv()
 
