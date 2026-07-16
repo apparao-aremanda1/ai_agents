@@ -1,17 +1,17 @@
+import logging
 import os
 import time
-import logging
 from typing import TypedDict, List, Dict
-from dotenv import load_dotenv
+
 import anthropic
+import pytesseract
+from dotenv import load_dotenv
 from langchain_chroma import Chroma  # <-- Modern, clean import
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langgraph.graph import StateGraph, END
-from langgraph.checkpoint.memory import MemorySaver
-import pytesseract
-from pdf2image import convert_from_path
 from langchain_text_splitters import CharacterTextSplitter
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import StateGraph, END
+from pdf2image import convert_from_path
 
 EMBEDDING_MODEL = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 CHROMA_DIR = "./chroma_linux_db"

@@ -1,12 +1,12 @@
 import operator
-import os
 from typing import List, Tuple, Annotated, TypedDict
-from pydantic import BaseModel, Field
-from langchain_core.prompts import ChatPromptTemplate
+
 from langchain_anthropic import ChatAnthropic  # <-- SWITCHED TO ANTHROPIC
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.tools import tool
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import create_react_agent
-from langchain_core.tools import tool
+from pydantic import BaseModel, Field
 
 
 # Make sure your ANTHROPIC_API_KEY is set in your environment variables

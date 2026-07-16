@@ -15,10 +15,11 @@ Method	        Final Cost	        Avg / Turn
 
 import os
 import time
-import fitz  # PyMuPDF
 from typing import TypedDict
-from dotenv import load_dotenv
+
 import anthropic
+import fitz  # PyMuPDF
+from dotenv import load_dotenv
 from langchain_community.tools import DuckDuckGoSearchRun
 from langgraph.graph import StateGraph, END
 

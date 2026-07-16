@@ -6,20 +6,20 @@ FAISS, it will support billions or vectors.
 
 chromadb will be for small and medium sized applications and FAISS is for huge applications.
 '''
+import logging
 import os
 import time
-import logging
 from typing import TypedDict, List, Dict
-from dotenv import load_dotenv
+
 import anthropic
+import pytesseract
+from dotenv import load_dotenv
 from langchain_chroma import Chroma  # <-- Modern, clean import
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langgraph.graph import StateGraph, END
-from langgraph.checkpoint.memory import MemorySaver
-import pytesseract
-from pdf2image import convert_from_path
 from langchain_text_splitters import CharacterTextSplitter
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import StateGraph, END
+from pdf2image import convert_from_path
 
 logging.basicConfig(
     level=logging.INFO, filename='output.log',
