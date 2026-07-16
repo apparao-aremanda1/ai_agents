@@ -1,19 +1,19 @@
 
-import os
-import time
-import fitz  # PyMuPDF
 import logging
+import os
+import sqlite3
+import time
 from typing import TypedDict, List, Dict
-from dotenv import load_dotenv
+
 import anthropic
-from langchain_community.tools import DuckDuckGoSearchRun
+import fitz  # PyMuPDF
+from dotenv import load_dotenv
 from langchain_chroma import Chroma  # <-- Modern, clean import
+from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langgraph.graph import StateGraph, END
-from langgraph.checkpoint.memory import MemorySaver
-import sqlite3
 from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.graph import StateGraph, END
 
 logging.basicConfig(
     level=logging.INFO, filename='output.log',
