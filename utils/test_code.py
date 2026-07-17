@@ -3,13 +3,13 @@ from bs4 import BeautifulSoup
 
 
 def print_secret_message(url):
-    '''
+    """
     prints the secret message with the given coordinates in the URL.
 
     :param url: url which holds the coordinates
     :return: None
-    '''
-    # Fetch the response fro the url
+    """
+    # Fetch the response from the url
     response = requests.get(url)
     if response.status_code != 200:
         print(f"Failed to retrieve the document. Status code: {response.status_code}")
