@@ -34,9 +34,9 @@ logging.getLogger("chromadb").setLevel(logging.WARNING)
 logging.info("Booting up local embedding model (One-time setup)...")
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-BASE_DIR = "/home/appaji58/chroma_db/private_rag"
+BASE_DIR = r"D:\ai_agents\pdf_reader"
 BILLS_DIR = os.path.join(BASE_DIR, "bills")
-DB_DIR = os.path.join(BASE_DIR, "chroma_linux_db")
+DB_DIR = os.path.join(BASE_DIR, "chroma_windows_db")
 os.makedirs(BILLS_DIR, exist_ok=True)
 
 vector_store = Chroma(
@@ -239,7 +239,7 @@ if __name__ == "__main__":
     app = build_agent()
     config = {"configurable": {"thread_id": "1"}}
 
-    user_query = "What is the difference between CTScan and angiography?"
+    user_query = "How much Spent People Hospital as inpatient? "
 
     # Initialize the state with the user's question
     initial_state = {

@@ -1,16 +1,19 @@
 import operator
 from typing import List, Tuple, Annotated, TypedDict
 
+from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic  # <-- SWITCHED TO ANTHROPIC
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import tool
 from langgraph.graph import StateGraph, START, END
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 from pydantic import BaseModel, Field
 
 
-# Make sure your ANTHROPIC_API_KEY is set in your environment variables
-# os.environ["ANTHROPIC_API_KEY"] = "your-api-key"
+# Load ANTHROPIC_API_KEY (and any other vars) from the project .env file.
+# This must run before ChatAnthropic is instantiated below, otherwise the
+# client finds no key in the environment and raises an authentication error.
+load_dotenv()
 
 # ---------------------------------------------------------
 # 1. STATE & SCHEMAS (The Deterministic Guardrails)
@@ -86,7 +89,7 @@ def executor_node(state: PlanExecuteState):
     current_task = state["plan"][0]
 
     # The executor runs a micro-agent to accomplish just this one task
-    executor_agent = create_react_agent(llm, tools)
+    executor_agent = create_agent(llm, tools)
     agent_response = executor_agent.invoke({"messages": [("user", current_task)]})
     result_string = agent_response["messages"][-1].content
 
