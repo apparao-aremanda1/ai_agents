@@ -63,7 +63,7 @@ tools = [fetch_live_positions, execute_square_off]
 # 3. DEFINING THE NODES
 # ---------------------------------------------------------
 # Claude 3.5 Sonnet is highly recommended here for its speed and reasoning capabilities
-llm = ChatAnthropic(model="claude-3-5-sonnet-20240620", temperature=0)  # <-- SWITCHED TO CLAUDE
+llm = ChatAnthropic(model="claude-haiku-4-5", temperature=0)  # <-- SWITCHED TO CLAUDE
 
 
 def planner_node(state: PlanExecuteState):

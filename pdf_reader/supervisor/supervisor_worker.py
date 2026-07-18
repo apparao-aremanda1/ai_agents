@@ -37,9 +37,9 @@ logging.getLogger("httpcore").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("chromadb").setLevel(logging.WARNING)
 
-BASE_DIR = "/home/appaji58/chroma_db/private_rag"
+BASE_DIR = r"D:\ai_agents\pdf_reader"
 BILLS_DIR = os.path.join(BASE_DIR, "bills")
-DB_DIR = os.path.join(BASE_DIR, "chroma_linux_db")
+DB_DIR = os.path.join(BASE_DIR, "chroma_windows_db")
 os.makedirs(BILLS_DIR, exist_ok=True)
 
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")

@@ -36,10 +36,16 @@ logging.getLogger("httpcore").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("chromadb").setLevel(logging.WARNING)
 
-BASE_DIR = "/home/appaji58/chroma_db/private_rag"
+BASE_DIR = r"D:\ai_agents\pdf_reader"
 BILLS_DIR = os.path.join(BASE_DIR, "bills")
-DB_DIR = os.path.join(BASE_DIR, "chroma_linux_db")
+# Match supervisor_worker.py so the vector store is written where the supervisor reads it.
+DB_DIR = os.path.join(BASE_DIR, "chroma_windows_db")
 os.makedirs(BILLS_DIR, exist_ok=True)
+
+# Windows OCR toolchain locations. Adjust if you installed these elsewhere.
+TESSERACT_CMD = r"D:\Tesseract-OCR\tesseract.exe"
+POPPLER_PATH = r"D:\poppler-26.02.0\Library\bin"
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
 
 logging.info("Booting up local embedding model (One-time setup)...")
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
@@ -55,10 +61,15 @@ vector_store = Chroma(
 # ==========================================
 def setup_real_database(pdf_filename="Hospital_bills.pdf"):
     """Reads a scanned PDF via OCR and processes pages statefully to combine multi-page bills and receipts."""
-    pdf_path = os.path.join(BILLS_DIR, pdf_filename)
+    # The PDF ships next to this script (vector_rag_bills/); fall back to BILLS_DIR.
+    candidate_paths = [
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), pdf_filename),
+        os.path.join(BILLS_DIR, pdf_filename),
+    ]
+    pdf_path = next((p for p in candidate_paths if os.path.exists(p)), None)
 
-    if not os.path.exists(pdf_path):
-        logging.error(f"Cannot find {pdf_path}. Please place your PDF in the /bills directory.")
+    if pdf_path is None:
+        logging.error(f"Cannot find {pdf_filename}. Looked in: {candidate_paths}")
         return
 
     logging.info("--- 📄 STARTING STATE-AWARE OCR PROCESSING ---")
@@ -72,7 +83,7 @@ def setup_real_database(pdf_filename="Hospital_bills.pdf"):
 
     try:
         logging.info("Converting PDF pages to images...")
-        pages = convert_from_path(pdf_path)
+        pages = convert_from_path(pdf_path, poppler_path=POPPLER_PATH)
         logging.info(f"Successfully loaded {len(pages)} pages.")
 
         for i, page_image in enumerate(pages):
